@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLang } from './context/LanguageContext';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -179,13 +180,17 @@ const EVENT_PLANS: Record<string, Record<string, Plan>> = {
   }
 };
 
-const EVENTS = [
-  { id: 'wedding', title: 'Weddings', desc: 'Grand stages & floral drapes', icon: <Users className="w-5 h-5" />, emoji: '💍', needsStageCustomization: true },
-  { id: 'birthday', title: 'Birthdays', desc: 'Balloons & intimate lighting', icon: <Cake className="w-5 h-5" />, emoji: '🎂', needsStageCustomization: true },
-  { id: 'baby', title: 'Baby Shower', desc: 'Soft pastels & central seating', icon: <Baby className="w-5 h-5" />, emoji: '🍼', needsStageCustomization: true },
-  { id: 'housewarming', title: 'Housewarming', desc: 'Floral hangings & entrance', icon: <Home className="w-5 h-5" />, emoji: '🏡', needsStageCustomization: false },
-  { id: 'memorial', title: 'Memorial', desc: 'White drapes & subtle florals', icon: <Church className="w-5 h-5" />, emoji: '🕊️', needsStageCustomization: false },
-];
+// EVENTS now built inside the component so titles react to language
+function useEvents() {
+  const { t } = useLang();
+  return [
+    { id: 'wedding',      title: t('weddings'),    desc: t('weddingsDesc'),    icon: <Users className="w-5 h-5" />, emoji: '💍', needsStageCustomization: true },
+    { id: 'birthday',     title: t('birthdays'),   desc: t('birthdaysDesc'),   icon: <Cake className="w-5 h-5" />,  emoji: '🎂', needsStageCustomization: true },
+    { id: 'baby',         title: t('babyShower'),  desc: t('babyShowerDesc'),  icon: <Baby className="w-5 h-5" />,  emoji: '🍼', needsStageCustomization: true },
+    { id: 'housewarming', title: t('housewarming'),desc: t('housewarmingDesc'),icon: <Home className="w-5 h-5" />,  emoji: '🏡', needsStageCustomization: false },
+    { id: 'memorial',     title: t('memorial'),    desc: t('memorialDesc'),    icon: <Church className="w-5 h-5" />,emoji: '🕊️', needsStageCustomization: false },
+  ];
+}
 
 const PLAN_TIERS = [
   { id: 'budget', icon: <Zap className="w-4 h-4" />, badge: 'Starter', color: 'from-purple-400 to-purple-300' },
@@ -202,7 +207,7 @@ function ThemeToggle() {
       className="relative w-14 h-7 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
       style={{
         background: isDark
-          ? 'linear-gradient(135deg, #3d2860, #c09cde)'
+          ? 'linear-gradient(135deg, #4a3373, #c09cde)'
           : 'linear-gradient(135deg, #2a7dd4, #5aa0e0)',
       }}
     >
@@ -211,7 +216,7 @@ function ThemeToggle() {
         style={{ transform: isDark ? 'translateX(28px)' : 'translateX(0)' }}
       >
         {isDark
-          ? <Moon className="w-3.5 h-3.5 text-[#3d2860]" />
+          ? <Moon className="w-3.5 h-3.5 text-[#4a3373]" />
           : <Sun className="w-3.5 h-3.5 text-[#2a7dd4]" />
         }
       </span>
@@ -219,14 +224,35 @@ function ThemeToggle() {
   );
 }
 
+function LangToggle() {
+  const { toggleLang, t } = useLang();
+  const { isDark } = useTheme();
+  return (
+    <button
+      onClick={toggleLang}
+      aria-label="Toggle language"
+      className="px-3 h-7 rounded-full text-[11px] font-black tracking-wide transition-all active:scale-95"
+      style={{
+        background: isDark ? '#3a2656' : '#c8e4ff',
+        color: isDark ? '#c09cde' : '#2a7dd4',
+        border: isDark ? '1px solid rgba(192,156,222,0.3)' : '1px solid rgba(42,125,212,0.25)',
+      }}
+    >
+      {t('langLabel')}
+    </button>
+  );
+}
+
 export default function App() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLang();
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [activePackage, setActivePackage] = useState<any>(null);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [currentDesignIndex, setCurrentDesignIndex] = useState(0);
   const [selectedDesign, setSelectedDesign] = useState<string | null>(null);
   const [activeScreen, setActiveScreen] = useState<Screen>('home');
+  const EVENTS = useEvents();
 
   // Carousel ref and state for touch-friendly autoscroll
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -257,8 +283,8 @@ export default function App() {
     typeof window !== 'undefined' &&
     ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
@@ -291,7 +317,7 @@ export default function App() {
           {/* Plan Header */}
           <div
             className="relative px-5 pt-5 pb-4"
-            style={{ background: `linear-gradient(135deg, ${isDark ? '#2d1e45' : '#c8e4ff'}, ${isDark ? '#1a1025' : '#b3d9ff'})` }}
+            style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#231633' : '#b3d9ff'})` }}
           >
             <button
               onClick={() => { setSelectedPlan(null); setCurrentDesignIndex(0); setSelectedDesign(null); }}
@@ -337,7 +363,7 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-2">
               {selectedPlan.features.map((f, i) => (
-                <div key={i} className="rounded-xl px-3 py-2" style={{ background: isDark ? '#2d1e45' : '#c8e4ff' }}>
+                <div key={i} className="rounded-xl px-3 py-2" style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}>
                   <div className="flex items-center gap-2">
                     <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: purple }}>
                       <span className="text-white text-[9px] font-black">✓</span>
@@ -388,7 +414,7 @@ export default function App() {
           className="fixed top-3 left-3 z-50 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold shadow-lg transition-all active:scale-95"
           style={{ background: card, color: text, border: `1px solid ${border}` }}
         >
-          <ArrowLeft className="w-4 h-4" /> Back
+          <ArrowLeft className="w-4 h-4" /> {t('back').replace('← ', '')}
         </button>
       </DndProvider>
     );
@@ -459,11 +485,14 @@ export default function App() {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-black tracking-tight leading-none" style={{ color: text }}>Planify</h1>
-              <p className="text-[10px] font-medium tracking-wide" style={{ color: textMuted }}>Event Planner</p>
+              <h1 className="text-xl font-black tracking-tight leading-none" style={{ color: text }}>{t('appName')}</h1>
+              <p className="text-[10px] font-medium tracking-wide" style={{ color: textMuted }}>{t('appTagline')}</p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex flex-col items-end gap-1.5">
+            <ThemeToggle />
+            <LangToggle />
+          </div>
         </div>
       </header>
 
@@ -471,13 +500,13 @@ export default function App() {
       <div className="px-4 pt-5 pb-2 max-w-lg mx-auto">
         <div
           className="rounded-3xl p-5 relative overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${isDark ? '#2d1e45' : '#c8e4ff'}, ${isDark ? '#3d2860' : '#b3d9ff'})` }}
+          style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#4a3373' : '#b3d9ff'})` }}
         >
           <div className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-20" style={{ background: purple, transform: 'translate(30%, -30%)' }} />
           <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full opacity-10" style={{ background: isDark ? '#a07ac8' : '#5aa0e0', transform: 'translate(-30%, 30%)' }} />
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] mb-1" style={{ color: purple }}>✨ Welcome</p>
-          <h2 className="text-2xl font-black leading-tight mb-1.5" style={{ color: text }}>Plan your perfect event</h2>
-          <p className="text-sm leading-relaxed" style={{ color: textMuted }}>Design stages, plan menus & get instant quotes — all in one app.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] mb-1" style={{ color: purple }}>{t('welcome')}</p>
+          <h2 className="text-2xl font-black leading-tight mb-1.5" style={{ color: text }}>{t('heroTitle')}</h2>
+          <p className="text-sm leading-relaxed" style={{ color: textMuted }}>{t('heroSubtitle')}</p>
         </div>
       </div>
 
@@ -487,7 +516,7 @@ export default function App() {
         <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-black tracking-tight" style={{ color: text }}>
-              {selectedEvent ? `${currentEvent?.emoji} ${currentEvent?.title}` : '🎉 Event Type'}
+              {selectedEvent ? `${currentEvent?.emoji} ${currentEvent?.title}` : t('eventType')}
             </h2>
             {selectedEvent && (
               <button
@@ -510,7 +539,7 @@ export default function App() {
                   className="text-left p-4 rounded-2xl transition-all active:scale-95 group"
                   style={{ background: card, border: `1px solid ${border}` }}
                 >
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all" style={{ background: isDark ? '#3d2860' : '#b3d9ff', color: purple }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: purple }}>
                     {event.icon}
                   </div>
                   <h3 className="font-bold text-sm leading-tight mb-0.5" style={{ color: text }}>{event.title}</h3>
@@ -531,18 +560,18 @@ export default function App() {
                   className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all active:scale-95"
                   style={{ background: card, border: `1px solid ${border}` }}
                 >
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: isDark ? '#3d2860' : '#b3d9ff', color: purple }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: purple }}>
                     <Ruler className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-sm" style={{ color: text }}>Customize Your Stage</h3>
-                    <p className="text-xs mt-0.5" style={{ color: textMuted }}>Start with a blank canvas →</p>
+                    <h3 className="font-bold text-sm" style={{ color: text }}>{t('customizeStage')}</h3>
+                    <p className="text-xs mt-0.5" style={{ color: textMuted }}>{t('blankCanvas')}</p>
                   </div>
                   <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: purple }} />
                 </button>
               )}
 
-              <p className="text-xs font-semibold uppercase tracking-widest px-1" style={{ color: textMuted }}>Or choose a package</p>
+              <p className="text-xs font-semibold uppercase tracking-widest px-1" style={{ color: textMuted }}>{t('orChoosePackage')}</p>
 
               {/* Auto-scrolling plan carousel — all 3 visible & looping */}
               <div 
@@ -593,13 +622,13 @@ export default function App() {
         {/* ── DIVIDER ── */}
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px" style={{ background: border }} />
-          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: textMuted }}>Also</span>
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: textMuted }}>{t('also')}</span>
           <div className="flex-1 h-px" style={{ background: border }} />
         </div>
 
         {/* ── CATERING CARD ── */}
         <section>
-          <h2 className="text-lg font-black tracking-tight mb-3" style={{ color: text }}>🍽️ Food & Catering</h2>
+          <h2 className="text-lg font-black tracking-tight mb-3" style={{ color: text }}>{t('foodCatering')}</h2>
           <button
             onClick={() => setActiveScreen('catering')}
             className="w-full text-left rounded-2xl overflow-hidden transition-all active:scale-95 shadow-sm"
@@ -607,20 +636,20 @@ export default function App() {
           >
             <div
               className="px-5 py-4 flex items-center gap-4"
-              style={{ background: `linear-gradient(135deg, ${isDark ? '#2d1e45' : '#c8e4ff'}, ${isDark ? '#1a1025' : '#faf8ff'})` }}
+              style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#231633' : '#faf8ff'})` }}
             >
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: `linear-gradient(135deg, ${purple}, ${isDark ? '#a07ac8' : '#5aa0e0'})` }}>
                 <UtensilsCrossed className="w-7 h-7 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-black tracking-tight" style={{ color: text }}>Plate Architect</h3>
-                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: textMuted }}>Build menus, estimate guests & export PDF quotes instantly</p>
+                <h3 className="text-lg font-black tracking-tight" style={{ color: text }}>{t('plateArchitect')}</h3>
+                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: textMuted }}>{t('plateArchitectDesc')}</p>
               </div>
               <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: purple }} />
             </div>
             <div className="px-5 py-3 flex gap-2" style={{ borderTop: `1px solid ${border}` }}>
-              {['Menu Builder', 'Guest Count', 'PDF Quotes'].map(tag => (
-                <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: isDark ? '#3d2860' : '#b3d9ff', color: isDark ? '#c09cde' : '#0d2d52' }}>
+              {[t('menuBuilder'), t('guestCount'), t('pdfQuotes')].map(tag => (
+                <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: isDark ? '#c09cde' : '#0d2d52' }}>
                   {tag}
                 </span>
               ))}
@@ -644,11 +673,11 @@ function BottomNav({ active, onNav, isDark, border, card, text, purple }: {
   onNav: (s: Screen) => void;
   isDark: boolean; border: string; card: string; text: string; purple: string;
 }) {
+  const { t } = useLang();
   const items = [
-    { id: 'home' as Screen,     label: 'Home',    icon: <LayoutGrid className="w-5 h-5" /> },
-    { id: 'quotes' as Screen,   label: 'Quotes',  icon: <FileText className="w-5 h-5" /> },
-    // { id: 'payments' as Screen, label: 'Pay', icon: <CreditCard className="w-5 h-5" /> }, // TODO: integrate later
-    { id: 'profile' as Screen,  label: 'Vendor',  icon: <Building2 className="w-5 h-5" /> },
+    { id: 'home' as Screen,     label: t('home'),   icon: <LayoutGrid className="w-5 h-5" /> },
+    { id: 'quotes' as Screen,   label: t('quotes'), icon: <FileText className="w-5 h-5" /> },
+    { id: 'profile' as Screen,  label: t('vendor'), icon: <Building2 className="w-5 h-5" /> },
   ];
 
   return (
@@ -668,7 +697,7 @@ function BottomNav({ active, onNav, isDark, border, card, text, purple }: {
             onClick={() => onNav(item.id)}
             className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-2xl transition-all active:scale-90"
             style={{
-              background: isActive ? (isDark ? '#2d1e45' : '#c8e4ff') : 'transparent',
+              background: isActive ? (isDark ? '#3a2656' : '#c8e4ff') : 'transparent',
               color: isActive ? purple : isDark ? 'rgba(240,230,255,0.4)' : 'rgba(13,45,82,0.45)',
             }}
           >

@@ -29,13 +29,13 @@ export function PaymentTracker({ eventId: initId, prefillName, prefillPhone }: P
   const [form, setForm] = useState({ name: '', eventType: 'Wedding', date: '', amount: 50000 });
   const [eventId, setEventId] = useState(initId ?? '');
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
   const accent = isDark ? '#c09cde' : '#2a7dd4';
-  const muted = isDark ? '#2d1e45' : '#c8e4ff';
+  const muted = isDark ? '#3a2656' : '#c8e4ff';
 
   useEffect(() => {
     if (eventId) {

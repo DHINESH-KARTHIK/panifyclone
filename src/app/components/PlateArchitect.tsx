@@ -70,12 +70,12 @@ export function PlateArchitect() {
   const [guestCount, setGuestCount] = useState(500);
   const [showPlate, setShowPlate] = useState(true);
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const muted = isDark ? '#2d1e45' : '#c8e4ff';
+  const muted = isDark ? '#3a2656' : '#c8e4ff';
   const purple = isDark ? '#c09cde' : '#2a7dd4';
 
   const updateQuantity = (id: string, delta: number) => {
@@ -359,7 +359,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
           </button>
 
           {showPlate && (
-            <div className="flex items-center justify-center gap-6 px-4 pb-5" style={{ background: isDark ? '#1a1025' : '#faf8ff' }}>
+            <div className="flex items-center justify-center gap-6 px-4 pb-5" style={{ background: isDark ? '#231633' : '#faf8ff' }}>
               {/* Plate */}
               <div className="relative w-44 h-44 sm:w-56 sm:h-56 flex-shrink-0">
                 <img loading="lazy" src={plateImg} alt="Plate" className="w-full h-full object-contain drop-shadow-xl" />
@@ -458,7 +458,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                       key={item.id}
                       className="rounded-2xl p-2.5 transition-all"
                       style={{
-                        background: item.quantity > 0 ? (isDark ? '#2d1e45' : '#f5f0fb') : card,
+                        background: item.quantity > 0 ? (isDark ? '#3a2656' : '#f5f0fb') : card,
                         border: `1px solid ${item.quantity > 0 ? purple + '66' : border}`,
                       }}
                     >
@@ -471,7 +471,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                       </div>
                       <div
                         className="flex items-center justify-between rounded-full px-1 py-1"
-                        style={{ background: isDark ? '#1a1025' : '#e8f3ff', border: `1px solid ${border}` }}
+                        style={{ background: isDark ? '#231633' : '#e8f3ff', border: `1px solid ${border}` }}
                       >
                         <button
                           onClick={() => updateQuantity(item.id, -1)}

@@ -34,8 +34,8 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
@@ -122,7 +122,7 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
         try {
           const canvas = await html2canvas(stageRef.current, {
             useCORS: true,
-            backgroundColor: isDark ? '#1a1025' : '#f0f7ff',
+            backgroundColor: isDark ? '#231633' : '#f0f7ff',
             scale: 2,
           });
           const blob = await new Promise<Blob | null>((resolve) =>

@@ -17,8 +17,8 @@ export function LogisticsCalculator({ itemQuantity = 0, onTotalChange }: Logisti
   const [breakdown, setBreakdown] = useState<LogisticsBreakdown | null>(null);
   const [expanded, setExpanded] = useState(false);
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
@@ -115,7 +115,7 @@ export function LogisticsCalculator({ itemQuantity = 0, onTotalChange }: Logisti
 
           {/* Breakdown */}
           {breakdown && (
-            <div className="rounded-xl p-3 mt-2" style={{ background: isDark ? '#1a1025' : '#f0f7ff' }}>
+            <div className="rounded-xl p-3 mt-2" style={{ background: isDark ? '#231633' : '#f0f7ff' }}>
               <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: textMuted }}>Breakdown</p>
               <Row label="Base Fee" value={`₹${breakdown.baseFee.toLocaleString('en-IN')}`} />
               <Row label={`Distance Fee (${distance} km × ₹${config?.per_km_rate ?? 20})`} value={`₹${breakdown.distanceFee.toLocaleString('en-IN')}`} />

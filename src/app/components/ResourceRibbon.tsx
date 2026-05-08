@@ -261,7 +261,7 @@ function TouchResourceCard({ item, onTouchDrop, card, border, text, isDark }: To
     >
       <div
         className="w-full h-16 sm:h-20 overflow-hidden flex items-center justify-center p-1"
-        style={{ background: isDark ? '#2d1e45' : '#c8e4ff' }}
+        style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}
       >
         <img
           loading="lazy"
@@ -306,11 +306,11 @@ export function ResourceRibbon({ onPointerDrop }: ResourceRibbonProps) {
       ? resources
       : resources.filter((r) => r.category === activeCategory);
 
-  const bg = isDark ? '#1a1025' : '#f0f7ff';
+  const bg = isDark ? '#231633' : '#f0f7ff';
   const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
   const text = isDark ? '#f0e6ff' : '#0d2d52';
   const purple = isDark ? '#c09cde' : '#2a7dd4';
-  const card = isDark ? '#231534' : '#ddeeff';
+  const card = isDark ? '#2d1e45' : '#ddeeff';
   const cardBorder = isDark ? 'rgba(192,156,222,0.25)' : 'rgba(42,125,212,0.18)';
 
   const handleTouchDrop = useCallback(
@@ -344,7 +344,7 @@ export function ResourceRibbon({ onPointerDrop }: ResourceRibbonProps) {
             onClick={() => setActiveCategory(cat)}
             className="px-3 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap flex-shrink-0 active:scale-95"
             style={{
-              background: activeCategory === cat ? purple : isDark ? '#2d1e45' : '#c8e4ff',
+              background: activeCategory === cat ? purple : isDark ? '#3a2656' : '#c8e4ff',
               color: activeCategory === cat ? '#fff' : text,
               transition: 'background 0.15s',
               // Make tap targets finger-friendly
