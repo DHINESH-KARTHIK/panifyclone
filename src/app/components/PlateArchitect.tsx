@@ -408,44 +408,27 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                         ) : (
                           <div className="relative w-full h-full">
                             {selectedItems.map((item, index) => {
-                              // Concentric layout logic
-                              const layer = Math.floor(index / 6);
-                              const indexInLayer = index % 6;
-                              const itemsInLayer = Math.min(selectedItems.length - layer * 6, 6);
-                              const angle = (indexInLayer / itemsInLayer) * 2 * Math.PI + (layer * 0.5);
-                              const radius = layer === 0 ? 55 : (layer === 1 ? 85 : 110);
+                              const angle = (index / selectedItems.length) * 2 * Math.PI;
+                              const radius = 60;
                               const x = Math.cos(angle) * radius;
                               const y = Math.sin(angle) * radius;
-                              const size = layer === 0 ? 52 : (layer === 1 ? 44 : 36);
 
                               return (
                                 <motion.div
                                   key={item.id}
-                                  initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
+                                  initial={{ scale: 0, opacity: 0 }}
                                   animate={{ scale: 1, opacity: 1, x, y }}
                                   exit={{ scale: 0, opacity: 0 }}
                                   className="absolute left-1/2 top-1/2"
-                                  style={{ 
-                                    marginLeft: -(size/2), 
-                                    marginTop: -(size/2),
-                                    zIndex: 10 - layer 
-                                  }}
+                                  style={{ marginLeft: -24, marginTop: -24 }}
                                 >
-                                  <div className="relative group">
-                                    <div 
-                                      className="rounded-full overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-110 active:scale-90"
-                                      style={{ width: size, height: size }}
-                                    >
+                                  <div className="relative">
+                                    <div className="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-white">
                                       <img loading="lazy" src={item.imgUrl} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
-                                    <motion.div 
-                                      initial={{ scale: 0 }}
-                                      animate={{ scale: 1 }}
-                                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black text-white shadow-sm" 
-                                      style={{ background: purple }}
-                                    >
+                                    <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white shadow-sm" style={{ background: purple }}>
                                       {item.quantity}
-                                    </motion.div>
+                                    </div>
                                   </div>
                                 </motion.div>
                               );
