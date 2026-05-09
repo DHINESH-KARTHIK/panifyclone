@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { useLang } from './context/LanguageContext';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -207,7 +208,7 @@ function ThemeToggle() {
       className="relative w-14 h-7 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
       style={{
         background: isDark
-          ? 'linear-gradient(135deg, #4a3373, #c09cde)'
+          ? 'linear-gradient(135deg, #1e293b, #38bdf8)'
           : 'linear-gradient(135deg, #2a7dd4, #5aa0e0)',
       }}
     >
@@ -216,7 +217,7 @@ function ThemeToggle() {
         style={{ transform: isDark ? 'translateX(28px)' : 'translateX(0)' }}
       >
         {isDark
-          ? <Moon className="w-3.5 h-3.5 text-[#4a3373]" />
+          ? <Moon className="w-3.5 h-3.5 text-[#1e293b]" />
           : <Sun className="w-3.5 h-3.5 text-[#2a7dd4]" />
         }
       </span>
@@ -233,9 +234,9 @@ function LangToggle() {
       aria-label="Toggle language"
       className="px-3 h-7 rounded-full text-[11px] font-black tracking-wide transition-all active:scale-95"
       style={{
-        background: isDark ? '#3a2656' : '#c8e4ff',
-        color: isDark ? '#c09cde' : '#2a7dd4',
-        border: isDark ? '1px solid rgba(192,156,222,0.3)' : '1px solid rgba(42,125,212,0.25)',
+        background: isDark ? 'rgba(56,189,248,0.1)' : '#c8e4ff',
+        color: isDark ? '#38bdf8' : '#2a7dd4',
+        border: isDark ? '1px solid rgba(56,189,248,0.3)' : '1px solid rgba(42,125,212,0.25)',
       }}
     >
       {t('langLabel')}
@@ -283,12 +284,12 @@ export default function App() {
     typeof window !== 'undefined' &&
     ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const purple = isDark ? '#c09cde' : '#2a7dd4';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.12)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.7)' : '#3a6898';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
 
   const startDesign = (packageId: string | null = null) => {
     setActivePackage(packageId);
@@ -326,7 +327,7 @@ export default function App() {
             >
               <X className="w-4 h-4" />
             </button>
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: purple }}>{selectedPlan.name} Plan</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: accent }}>{selectedPlan.name} Plan</span>
             <div className="flex items-end gap-2 mt-1">
               <span className="text-3xl font-black" style={{ color: text }}>₹{selectedPlan.price.toLocaleString('en-IN')}</span>
               <span className="text-xs mb-1" style={{ color: textMuted }}>starting</span>
@@ -365,7 +366,7 @@ export default function App() {
               {selectedPlan.features.map((f, i) => (
                 <div key={i} className="rounded-xl px-3 py-2" style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}>
                   <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: purple }}>
+                    <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: accent }}>
                       <span className="text-white text-[9px] font-black">✓</span>
                     </span>
                     <span className="text-xs font-medium" style={{ color: text }}>{f}</span>
@@ -382,7 +383,7 @@ export default function App() {
                   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
                 }}
                 className="w-full py-3.5 rounded-2xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: `linear-gradient(135deg, ${purple}, ${isDark ? '#a07ac8' : '#5aa0e0'})`, color: '#fff' }}
+                style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#0ea5e9' : '#5aa0e0'})`, color: '#fff' }}
               >
                 Start with {currentDesign.title} →
               </button>
@@ -441,7 +442,7 @@ export default function App() {
     return (
       <>
         <QuoteGenerator />
-        <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} purple={purple} />
+        <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} accent={accent} />
       </>
     );
   }
@@ -451,7 +452,7 @@ export default function App() {
   //   return (
   //     <>
   //       <PaymentTracker />
-  //       <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} purple={purple} />
+  //       <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} accent={accent} />
   //     </>
   //   );
   // }
@@ -461,29 +462,64 @@ export default function App() {
     return (
       <>
         <VendorProfilePage />
-        <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} purple={purple} />
+        <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} accent={accent} />
       </>
     );
   }
 
   // ── HOME VIEW ─────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen pb-20" style={{ background: bg, color: text }}>
+    <div className="min-h-screen pb-24 relative overflow-x-hidden" style={{ background: bg, color: text }}>
+      
+      {/* Dynamic Animated Background */}
+      {isDark && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full opacity-[0.07]"
+            style={{ background: `radial-gradient(circle, ${accent}, transparent 70%)`, filter: 'blur(80px)' }}
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              x: [0, -40, 0],
+              y: [0, -50, 0],
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-[10%] -right-[10%] w-[50%] h-[50%] rounded-full opacity-[0.05]"
+            style={{ background: `radial-gradient(circle, #818cf8, transparent 70%)`, filter: 'blur(100px)' }}
+          />
+        </div>
+      )}
+
+      <div className="relative z-10 max-w-lg mx-auto">
 
       {/* ── HEADER ── */}
-      <header
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         className="sticky top-0 z-30 px-4 py-3"
         style={{
-          background: isDark ? 'rgba(26,16,37,0.85)' : 'rgba(240,247,255,0.92)',
+          background: isDark ? 'rgba(10,15,26,0.85)' : 'rgba(240,247,255,0.92)',
           backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           borderBottom: `1px solid ${border}`,
         }}
       >
-        <div className="flex items-center justify-between max-w-lg mx-auto">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${purple}, ${isDark ? '#a07ac8' : '#5aa0e0'})` }}>
+            <motion.div 
+              whileHover={{ rotate: 15, scale: 1.1 }}
+              className="w-9 h-9 rounded-2xl flex items-center justify-center shadow-lg" 
+              style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#0ea5e9' : '#5aa0e0'})` }}
+            >
               <Sparkles className="w-5 h-5 text-white" />
-            </div>
+            </motion.div>
             <div>
               <h1 className="text-xl font-black tracking-tight leading-none" style={{ color: text }}>{t('appName')}</h1>
               <p className="text-[10px] font-medium tracking-wide" style={{ color: textMuted }}>{t('appTagline')}</p>
@@ -494,35 +530,53 @@ export default function App() {
             <LangToggle />
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* ── HERO BANNER ── */}
-      <div className="px-4 pt-5 pb-2 max-w-lg mx-auto">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.1 }}
+        className="px-4 pt-5 pb-2"
+      >
         <div
-          className="rounded-3xl p-5 relative overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#4a3373' : '#b3d9ff'})` }}
+          className="rounded-[32px] p-6 relative overflow-hidden shadow-2xl"
+          style={{ background: isDark ? 'linear-gradient(135deg, #1e293b, #0f172a)' : `linear-gradient(135deg, #c8e4ff, #b3d9ff)`, border: `1px solid ${border}` }}
         >
-          <div className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-20" style={{ background: purple, transform: 'translate(30%, -30%)' }} />
-          <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full opacity-10" style={{ background: isDark ? '#a07ac8' : '#5aa0e0', transform: 'translate(-30%, 30%)' }} />
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] mb-1" style={{ color: purple }}>{t('welcome')}</p>
-          <h2 className="text-2xl font-black leading-tight mb-1.5" style={{ color: text }}>{t('heroTitle')}</h2>
-          <p className="text-sm leading-relaxed" style={{ color: textMuted }}>{t('heroSubtitle')}</p>
+          <motion.div 
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-20" 
+            style={{ background: accent, filter: 'blur(30px)' }} 
+          />
+          <div className="relative z-10">
+            <p className="text-xs font-black uppercase tracking-[0.2em] mb-2" style={{ color: accent }}>{t('welcome')}</p>
+            <h2 className="text-2xl font-black leading-tight mb-2" style={{ color: text }}>{t('heroTitle')}</h2>
+            <p className="text-sm leading-relaxed max-w-[85%]" style={{ color: textMuted }}>{t('heroSubtitle')}</p>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="px-4 py-4 max-w-lg mx-auto space-y-6">
+      <div className="px-4 py-4 space-y-8">
 
         {/* ── EVENT SELECTION ── */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-black tracking-tight" style={{ color: text }}>
               {selectedEvent ? `${currentEvent?.emoji} ${currentEvent?.title}` : t('eventType')}
             </h2>
             {selectedEvent && (
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full transition-all active:scale-95"
-                style={{ border: `1px solid ${border}`, color: text }}
+                className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition-all active:scale-95 shadow-sm"
+                style={{ background: card, border: `1px solid ${border}`, color: text }}
               >
                 <ArrowLeft className="w-3 h-3" /> All
               </button>
@@ -539,13 +593,13 @@ export default function App() {
                   className="text-left p-4 rounded-2xl transition-all active:scale-95 group"
                   style={{ background: card, border: `1px solid ${border}` }}
                 >
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: purple }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all" style={{ background: isDark ? 'rgba(56,189,248,0.1)' : '#b3d9ff', color: accent }}>
                     {event.icon}
                   </div>
-                  <h3 className="font-bold text-sm leading-tight mb-0.5" style={{ color: text }}>{event.title}</h3>
-                  <p className="text-[11px] leading-4" style={{ color: textMuted }}>{event.desc}</p>
-                  <div className="mt-2.5 flex items-center gap-1" style={{ color: purple }}>
-                    <span className="text-[10px] font-semibold">Select</span>
+                  <h3 className="font-bold text-sm leading-tight mb-1" style={{ color: text }}>{event.title}</h3>
+                  <p className="text-[11px] leading-4 opacity-70" style={{ color: textMuted }}>{event.desc}</p>
+                  <div className="mt-3 flex items-center gap-1" style={{ color: accent }}>
+                    <span className="text-[10px] font-black uppercase tracking-wider">Select</span>
                     <ChevronRight className="w-3 h-3" />
                   </div>
                 </button>
@@ -560,14 +614,14 @@ export default function App() {
                   className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all active:scale-95"
                   style={{ background: card, border: `1px solid ${border}` }}
                 >
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: purple }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: isDark ? 'rgba(56,189,248,0.1)' : '#b3d9ff', color: accent }}>
                     <Ruler className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-sm" style={{ color: text }}>{t('customizeStage')}</h3>
                     <p className="text-xs mt-0.5" style={{ color: textMuted }}>{t('blankCanvas')}</p>
                   </div>
-                  <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: purple }} />
+                  <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: accent }} />
                 </button>
               )}
 
@@ -575,49 +629,50 @@ export default function App() {
 
               {/* Auto-scrolling plan carousel — all 3 visible & looping */}
               <div 
-                className="relative overflow-x-auto hide-scrollbar rounded-2xl"
+                className="relative overflow-x-auto hide-scrollbar rounded-2xl shadow-inner"
                 ref={carouselRef}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onTouchStart={() => setIsHovered(true)}
                 onTouchEnd={() => setIsHovered(false)}
-                style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'auto' }}
+                style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'auto', background: 'rgba(0,0,0,0.02)' }}
               >
-                <div className="flex gap-3 w-max pb-2">
+                <div className="flex gap-3 w-max px-2 py-4">
                   {/* Render twice for seamless infinite loop */}
                   {[...PLAN_TIERS, ...PLAN_TIERS].map((tier, idx) => {
                     const currentEventPlans = (selectedEvent && EVENT_PLANS[selectedEvent]) ? EVENT_PLANS[selectedEvent] : EVENT_PLANS['wedding'];
                     const plan = currentEventPlans[tier.id];
                     return (
-                      <button
+                      <motion.button
                         key={`${tier.id}-${idx}`}
+                        whileHover={{ y: -5 }}
                         onClick={() => setSelectedPlan(plan)}
-                        className="w-[145px] flex-shrink-0 rounded-2xl overflow-hidden text-left transition-all active:scale-95 shadow-sm"
-                        style={{ border: `1px solid ${border}`, background: card }}
+                        className="w-[155px] flex-shrink-0 rounded-3xl overflow-hidden text-left transition-all active:scale-95 shadow-lg border-2"
+                        style={{ borderColor: border, background: card }}
                       >
                         <div className="aspect-[4/3] relative overflow-hidden">
                           <img loading="lazy" src={plan.coverImage} alt={plan.name} className="w-full h-full object-cover object-center" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                          <span className="absolute bottom-2 left-2 text-[10px] font-black text-white uppercase tracking-wide bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                          <span className="absolute bottom-2 left-2 text-[10px] font-black text-white uppercase tracking-wider bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/30">
                             {tier.badge}
                           </span>
-                          <span className="absolute top-2 right-2" style={{ color: '#fff' }}>{tier.icon}</span>
+                          <span className="absolute top-2 right-2 text-white drop-shadow-md">{tier.icon}</span>
                         </div>
-                        <div className="p-3">
-                          <div className="flex items-center justify-between mb-1">
+                        <div className="p-4">
+                          <div className="flex items-center justify-between mb-1.5">
                             <span className="font-black text-sm" style={{ color: text }}>{plan.name}</span>
-                            <span className="text-xs font-black" style={{ color: purple }}>₹{(plan.price / 1000).toFixed(0)}k</span>
+                            <span className="text-[11px] font-black px-1.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-500">₹{(plan.price / 1000).toFixed(0)}k</span>
                           </div>
-                          <p className="text-[10px] line-clamp-2" style={{ color: textMuted }}>{plan.description}</p>
+                          <p className="text-[10px] leading-relaxed line-clamp-2 opacity-70" style={{ color: textMuted }}>{plan.description}</p>
                         </div>
-                      </button>
+                      </motion.button>
                     );
                   })}
                 </div>
               </div>
             </div>
           )}
-        </section>
+        </motion.section>
 
         {/* ── DIVIDER ── */}
         <div className="flex items-center gap-3">
@@ -627,40 +682,53 @@ export default function App() {
         </div>
 
         {/* ── CATERING CARD ── */}
-        <section>
-          <h2 className="text-lg font-black tracking-tight mb-3" style={{ color: text }}>{t('foodCatering')}</h2>
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h2 className="text-lg font-black tracking-tight mb-4" style={{ color: text }}>{t('foodCatering')}</h2>
           <button
             onClick={() => setActiveScreen('catering')}
-            className="w-full text-left rounded-2xl overflow-hidden transition-all active:scale-95 shadow-sm"
-            style={{ background: card, border: `1px solid ${border}` }}
+            className="w-full text-left rounded-[32px] overflow-hidden transition-all active:scale-[0.98] shadow-xl border-2"
+            style={{ background: card, borderColor: border }}
           >
             <div
-              className="px-5 py-4 flex items-center gap-4"
-              style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#231633' : '#faf8ff'})` }}
+              className="px-6 py-5 flex items-center gap-5"
+              style={{ background: isDark ? 'linear-gradient(135deg, #1e293b, #0f172a)' : 'linear-gradient(135deg, #f0f7ff, #faf8ff)' }}
             >
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: `linear-gradient(135deg, ${purple}, ${isDark ? '#a07ac8' : '#5aa0e0'})` }}>
-                <UtensilsCrossed className="w-7 h-7 text-white" />
-              </div>
+              <motion.div 
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg" 
+                style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#0ea5e9' : '#5aa0e0'})` }}
+              >
+                <UtensilsCrossed className="w-8 h-8 text-white" />
+              </motion.div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-black tracking-tight" style={{ color: text }}>{t('plateArchitect')}</h3>
-                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: textMuted }}>{t('plateArchitectDesc')}</p>
+                <p className="text-xs mt-1 leading-relaxed opacity-80" style={{ color: textMuted }}>{t('plateArchitectDesc')}</p>
               </div>
-              <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: purple }} />
+              <ChevronRight className="w-6 h-6 flex-shrink-0" style={{ color: accent }} />
             </div>
-            <div className="px-5 py-3 flex gap-2" style={{ borderTop: `1px solid ${border}` }}>
+            <div className="px-6 py-4 flex gap-2 overflow-x-auto hide-scrollbar" style={{ borderTop: `1px solid ${border}`, background: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.5)' }}>
               {[t('menuBuilder'), t('guestCount'), t('pdfQuotes')].map(tag => (
-                <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: isDark ? '#4a3373' : '#b3d9ff', color: isDark ? '#c09cde' : '#0d2d52' }}>
+                <span key={tag} className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border" style={{ background: isDark ? 'rgba(56,189,248,0.05)' : '#b3d9ff', color: accent, borderColor: isDark ? 'rgba(56,189,248,0.1)' : 'transparent' }}>
                   {tag}
                 </span>
               ))}
             </div>
           </button>
-        </section>
+        </motion.section>
 
       </div>
 
       {/* ── BOTTOM NAV ── */}
-      <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} purple={purple} />
+      <BottomNav active={activeScreen} onNav={setActiveScreen} isDark={isDark} border={border} card={card} text={text} accent={accent} />
+      </div>
     </div>
   );
 }
@@ -668,10 +736,10 @@ export default function App() {
 // ── Bottom Navigation Bar ─────────────────────────────────────────────────────
 type Screen = 'home' | 'studio' | 'catering' | 'quotes' | /* 'payments' | */ 'profile';
 
-function BottomNav({ active, onNav, isDark, border, card, text, purple }: {
+function BottomNav({ active, onNav, isDark, border, card, text, accent }: {
   active: Screen;
   onNav: (s: Screen) => void;
-  isDark: boolean; border: string; card: string; text: string; purple: string;
+  isDark: boolean; border: string; card: string; text: string; accent: string;
 }) {
   const { t } = useLang();
   const items = [
@@ -684,8 +752,9 @@ function BottomNav({ active, onNav, isDark, border, card, text, purple }: {
     <nav
       className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around px-2 py-2 max-w-lg mx-auto"
       style={{
-        background: isDark ? 'rgba(26,16,37,0.97)' : 'rgba(240,247,255,0.97)',
+        background: isDark ? 'rgba(10,15,26,0.97)' : 'rgba(240,247,255,0.97)',
         backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderTop: `1px solid ${border}`,
       }}
     >
@@ -697,12 +766,24 @@ function BottomNav({ active, onNav, isDark, border, card, text, purple }: {
             onClick={() => onNav(item.id)}
             className="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-2xl transition-all active:scale-90"
             style={{
-              background: isActive ? (isDark ? '#3a2656' : '#c8e4ff') : 'transparent',
-              color: isActive ? purple : isDark ? 'rgba(240,230,255,0.4)' : 'rgba(13,45,82,0.45)',
+              background: isActive ? (isDark ? 'rgba(56,189,248,0.1)' : '#c8e4ff') : 'transparent',
+              color: isActive ? accent : isDark ? 'rgba(148,163,184,0.4)' : 'rgba(13,45,82,0.45)',
             }}
           >
-            {item.icon}
+            <motion.div
+              animate={isActive ? { y: -2, scale: 1.1 } : { y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              {item.icon}
+            </motion.div>
             <span className="text-[9px] font-bold">{item.label}</span>
+            {isActive && (
+              <motion.div 
+                layoutId="nav-indicator"
+                className="absolute -bottom-1 w-1 h-1 rounded-full" 
+                style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} 
+              />
+            )}
           </button>
         );
       })}
