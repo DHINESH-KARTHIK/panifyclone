@@ -318,7 +318,7 @@ export default function App() {
           {/* Plan Header */}
           <div
             className="relative px-5 pt-5 pb-4"
-            style={{ background: `linear-gradient(135deg, ${isDark ? '#3a2656' : '#c8e4ff'}, ${isDark ? '#231633' : '#b3d9ff'})` }}
+            style={{ background: `linear-gradient(135deg, ${isDark ? '#1e293b' : '#c8e4ff'}, ${isDark ? '#0a0f1a' : '#b3d9ff'})` }}
           >
             <button
               onClick={() => { setSelectedPlan(null); setCurrentDesignIndex(0); setSelectedDesign(null); }}
@@ -364,7 +364,7 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-2">
               {selectedPlan.features.map((f, i) => (
-                <div key={i} className="rounded-xl px-3 py-2" style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}>
+                <div key={i} className="rounded-xl px-3 py-2" style={{ background: isDark ? '#1e293b' : '#c8e4ff' }}>
                   <div className="flex items-center gap-2">
                     <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: accent }}>
                       <span className="text-white text-[9px] font-black">✓</span>

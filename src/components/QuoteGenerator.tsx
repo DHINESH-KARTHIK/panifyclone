@@ -89,13 +89,13 @@ export function QuoteGenerator() {
   const [customPrice, setCustomPrice] = useState(0);
   const [customUnit, setCustomUnit] = useState('fixed');
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const accent = isDark ? '#c09cde' : '#2a7dd4';
-  const muted = isDark ? '#3a2656' : '#c8e4ff';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.15)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.7)' : '#3a6898';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
+  const muted = isDark ? '#1e293b' : '#c8e4ff';
 
   const addCatalogItem = (cat: string, item: { name: string; unitPrice: number; unit: string }) => {
     const existing = items.find(i => i.name === item.name);
@@ -327,7 +327,7 @@ export function QuoteGenerator() {
                 {openCat === cat.category ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
               {openCat === cat.category && (
-                <div className="grid grid-cols-2 gap-2 p-3" style={{ background: isDark ? '#231633' : '#f5faff' }}>
+                <div className="grid grid-cols-2 gap-2 p-3" style={{ background: isDark ? '#0a0f1a' : '#f5faff' }}>
                   {cat.items.map(item => {
                     const inCart = items.find(i => i.name === item.name);
                     return (
@@ -336,7 +336,7 @@ export function QuoteGenerator() {
                         onClick={() => addCatalogItem(cat.category, item)}
                         className="text-left rounded-xl p-2.5 transition-all active:scale-95"
                         style={{
-                          background: inCart ? (isDark ? '#3a2656' : '#e8f0fe') : muted,
+                          background: inCart ? (isDark ? '#1e293b' : '#e8f0fe') : muted,
                           border: `1px solid ${inCart ? accent + '88' : border}`,
                         }}
                       >
@@ -398,7 +398,7 @@ export function QuoteGenerator() {
                 <button onClick={() => removeItem(item.id)}><Trash2 className="w-4 h-4 text-red-400" /></button>
               </div>
             ))}
-            <div className="px-4 py-3 space-y-1" style={{ background: isDark ? '#231633' : '#f0f7ff' }}>
+            <div className="px-4 py-3 space-y-1" style={{ background: isDark ? '#0a0f1a' : '#f0f7ff' }}>
               <div className="flex justify-between text-xs" style={{ color: textMuted }}><span>Subtotal</span><span>₹{subtotal.toLocaleString('en-IN')}</span></div>
               <div className="flex justify-between text-xs" style={{ color: textMuted }}><span>GST (18%)</span><span>₹{gst.toLocaleString('en-IN')}</span></div>
               <div className="flex justify-between font-black text-base pt-1" style={{ color: text, borderTop: `2px solid ${accent}` }}>
@@ -411,12 +411,12 @@ export function QuoteGenerator() {
 
       {/* Sticky Export */}
       <div className="fixed bottom-[64px] left-0 right-0 px-4 py-3 z-20"
-        style={{ background: isDark ? 'rgba(26,16,37,0.97)' : 'rgba(240,247,255,0.97)', backdropFilter: 'blur(12px)', borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}` }}>
+        style={{ background: isDark ? 'rgba(10,15,26,0.97)' : 'rgba(240,247,255,0.97)', backdropFilter: 'blur(12px)', borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}` }}>
         <button
           onClick={generatePDF}
           disabled={items.length === 0}
           className="w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2.5 active:scale-95 disabled:opacity-40"
-          style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#a07ac8' : '#5aa0e0'})`, color: '#fff' }}
+          style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#0ea5e9' : '#5aa0e0'})`, color: '#fff' }}
         >
           <Download className="w-4 h-4" /> Export PDF & Share on WhatsApp <Share2 className="w-4 h-4" />
         </button>

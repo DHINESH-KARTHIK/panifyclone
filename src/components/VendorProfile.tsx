@@ -53,13 +53,13 @@ export function VendorProfilePage() {
   const [newReview, setNewReview] = useState({ name: '', rating: 5, text: '' });
   const [submitting, setSubmitting] = useState(false);
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const accent = isDark ? '#c09cde' : '#2a7dd4';
-  const muted = isDark ? '#3a2656' : '#c8e4ff';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.15)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.7)' : '#3a6898';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
+  const muted = isDark ? '#1e293b' : '#c8e4ff';
 
   const avgRating = reviews.reduce((s, r) => s + (r.rating ?? 0), 0) / reviews.length;
 

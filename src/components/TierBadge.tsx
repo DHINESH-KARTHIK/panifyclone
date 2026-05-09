@@ -30,7 +30,7 @@ export function TierBadge({ tiers, quantity }: TierBadgeProps) {
             key={tier.id}
             className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all"
             style={{
-              background: isActive ? c.bg : isDark ? '#3a2656' : '#f0f7ff',
+              background: isActive ? c.bg : isDark ? '#1e293b' : '#f0f7ff',
               color: isActive ? c.text : isDark ? '#9ca3af' : '#6b7280',
               border: `1px solid ${isActive ? c.dot : 'transparent'}`,
               transform: isActive ? 'scale(1.05)' : 'scale(1)',

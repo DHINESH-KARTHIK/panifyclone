@@ -17,12 +17,12 @@ export function LogisticsCalculator({ itemQuantity = 0, onTotalChange }: Logisti
   const [breakdown, setBreakdown] = useState<LogisticsBreakdown | null>(null);
   const [expanded, setExpanded] = useState(false);
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const accent = isDark ? '#c09cde' : '#2a7dd4';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.15)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.7)' : '#3a6898';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
 
   useEffect(() => {
     supabase.from('logistics_config').select('*').limit(1).single()
@@ -115,7 +115,7 @@ export function LogisticsCalculator({ itemQuantity = 0, onTotalChange }: Logisti
 
           {/* Breakdown */}
           {breakdown && (
-            <div className="rounded-xl p-3 mt-2" style={{ background: isDark ? '#231633' : '#f0f7ff' }}>
+            <div className="rounded-xl p-3 mt-2" style={{ background: isDark ? '#0a0f1a' : '#f0f7ff' }}>
               <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: textMuted }}>Breakdown</p>
               <Row label="Base Fee" value={`₹${breakdown.baseFee.toLocaleString('en-IN')}`} />
               <Row label={`Distance Fee (${distance} km × ₹${config?.per_km_rate ?? 20})`} value={`₹${breakdown.distanceFee.toLocaleString('en-IN')}`} />
