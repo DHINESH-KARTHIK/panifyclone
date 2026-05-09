@@ -34,12 +34,12 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const purple = isDark ? '#c09cde' : '#2a7dd4';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.15)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.7)' : '#3a6898';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
 
   // ── Drop helpers ───────────────────────────────────────────────────────────
 
@@ -122,7 +122,7 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
         try {
           const canvas = await html2canvas(stageRef.current, {
             useCORS: true,
-            backgroundColor: isDark ? '#231633' : '#f0f7ff',
+            backgroundColor: isDark ? '#0a0f1a' : '#f0f7ff',
             scale: 2,
           });
           const blob = await new Promise<Blob | null>((resolve) =>
@@ -174,7 +174,7 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
       <div
         className="px-4 py-3 flex-shrink-0"
         style={{
-          background: isDark ? 'rgba(26,16,37,0.92)' : 'rgba(240,247,255,0.92)',
+          background: isDark ? 'rgba(10,15,26,0.92)' : 'rgba(240,247,255,0.92)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           borderBottom: `1px solid ${border}`,
@@ -205,7 +205,7 @@ export function DesignStudio({ initialPackage, eventType }: DesignStudioProps) {
           className="flex items-center gap-2 px-3 py-2 rounded-full shadow-lg"
           style={{ background: card, border: `1px solid ${border}`, color: text }}
         >
-          <IndianRupee className="w-4 h-4 flex-shrink-0" style={{ color: purple }} />
+          <IndianRupee className="w-4 h-4 flex-shrink-0" style={{ color: accent }} />
           <div>
             <div className="text-[10px] hidden sm:block" style={{ color: textMuted }}>Total</div>
             <div className="font-black text-sm">₹{totalCost.toLocaleString('en-IN')}</div>

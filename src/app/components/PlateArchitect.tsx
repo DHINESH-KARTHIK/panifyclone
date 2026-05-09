@@ -71,13 +71,13 @@ export function PlateArchitect() {
   const [guestCount, setGuestCount] = useState(500);
   const [showPlate, setShowPlate] = useState(true);
 
-  const bg = isDark ? '#231633' : '#f0f7ff';
-  const card = isDark ? '#2d1e45' : '#ddeeff';
-  const border = isDark ? 'rgba(192,156,222,0.2)' : 'rgba(42,125,212,0.18)';
-  const text = isDark ? '#f0e6ff' : '#0d2d52';
-  const textMuted = isDark ? 'rgba(240,230,255,0.6)' : '#3a6898';
-  const muted = isDark ? '#3a2656' : '#c8e4ff';
-  const purple = isDark ? '#c09cde' : '#2a7dd4';
+  const bg = isDark ? '#0a0f1a' : '#f0f7ff';
+  const card = isDark ? '#161e2d' : '#ddeeff';
+  const border = isDark ? 'rgba(100, 180, 255, 0.1)' : 'rgba(42,125,212,0.18)';
+  const text = isDark ? '#e2e8f0' : '#0d2d52';
+  const textMuted = isDark ? 'rgba(148, 163, 184, 0.6)' : '#3a6898';
+  const muted = isDark ? 'rgba(30, 41, 59, 0.4)' : '#c8e4ff';
+  const accent = isDark ? '#38bdf8' : '#2a7dd4';
 
   const updateQuantity = (id: string, delta: number) => {
     setItems(items.map(item =>
@@ -313,14 +313,14 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
       <div
         className="px-4 py-3 flex justify-between items-center z-20"
         style={{
-          background: isDark ? 'rgba(26,16,37,0.95)' : 'rgba(255,255,255,0.95)',
+          background: isDark ? 'rgba(10,15,26,0.95)' : 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(12px)',
           borderBottom: `1px solid ${border}`,
         }}
       >
         <div>
           <h1 className="text-lg font-black flex items-center gap-2" style={{ color: text }}>
-            <Utensils className="w-5 h-5" style={{ color: purple }} />
+            <Utensils className="w-5 h-5" style={{ color: accent }} />
             Plate Architect
           </h1>
           <p className="text-[10px] uppercase tracking-widest" style={{ color: textMuted }}>Gastronomy Planner</p>
@@ -336,7 +336,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex gap-2 px-4 py-2.5" 
-        style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'rgba(58,38,86,0.4)' : 'rgba(200,228,255,0.4)' }}
+        style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'rgba(30,41,59,0.4)' : 'rgba(200,228,255,0.4)' }}
       >
         {[
           { label: 'Guests', value: guestCount, icon: <Users className="w-3 h-3" /> },
@@ -345,7 +345,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
         ].map((stat, i) => (
           <div key={i} className="flex-1 flex flex-col items-center justify-center p-2 rounded-xl" style={{ background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}>
             <div className="flex items-center gap-1 mb-0.5">
-              <span style={{ color: purple }}>{stat.icon}</span>
+              <span style={{ color: accent }}>{stat.icon}</span>
               <p className="text-[9px] uppercase tracking-wider font-bold" style={{ color: textMuted }}>{stat.label}</p>
             </div>
             <p className="text-sm font-black" style={{ color: text }}>{stat.value}</p>
@@ -357,14 +357,14 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
       <div className="flex-1 overflow-y-auto pb-24">
 
         {/* Plate Preview */}
-        <div style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'linear-gradient(to bottom, #231633, #2a1b3d)' : 'linear-gradient(to bottom, #f0f7ff, #f8faff)' }}>
+        <div style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'linear-gradient(to bottom, #0a0f1a, #161e2d)' : 'linear-gradient(to bottom, #f0f7ff, #f8faff)' }}>
           <button
             onClick={() => setShowPlate(v => !v)}
             className="w-full flex items-center justify-between px-4 py-4"
             style={{ color: text }}
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-inner" style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-inner" style={{ background: isDark ? '#1e293b' : '#c8e4ff' }}>
                 <span className="text-sm">🍽️</span>
               </div>
               <div className="text-left">
@@ -426,7 +426,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                                     <div className="w-12 h-12 rounded-full overflow-hidden shadow-md border-[1.5px] border-black/80">
                                       <img loading="lazy" src={item.imgUrl} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
-                                    <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white shadow-sm" style={{ background: purple }}>
+                                    <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white shadow-sm" style={{ background: accent }}>
                                       {item.quantity}
                                     </div>
                                   </div>
@@ -449,9 +449,9 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                         className="w-full"
                       >
                         <div className="flex items-center gap-2 mb-3">
-                          <Wine className="w-3 h-3" style={{ color: purple }} />
+                          <Wine className="w-3 h-3" style={{ color: accent }} />
                           <p className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: textMuted }}>Beverage Tray</p>
-                          <div className="flex-1 h-px opacity-20" style={{ background: purple }} />
+                          <div className="flex-1 h-px opacity-20" style={{ background: accent }} />
                         </div>
                         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none px-2">
                           {selectedDrinks.map(drink => (
@@ -467,7 +467,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                                   <img loading="lazy" src={drink.imgUrl} alt={drink.name} className="w-full h-full object-cover" />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                 </div>
-                                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white shadow-lg border-2 border-white" style={{ background: purple }}>
+                                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white shadow-lg border-2 border-white" style={{ background: accent }}>
                                   {drink.quantity}
                                 </div>
                               </div>
@@ -488,7 +488,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
         <div className="px-4 py-4" style={{ borderBottom: `1px solid ${border}` }}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4" style={{ color: purple }} />
+              <Users className="w-4 h-4" style={{ color: accent }} />
               <span className="text-sm font-bold" style={{ color: text }}>Guest Count</span>
             </div>
             <span className="text-2xl font-black" style={{ color: text }}>{guestCount}</span>
@@ -501,7 +501,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
             value={guestCount}
             onChange={e => setGuestCount(parseInt(e.target.value))}
             className="w-full h-2 rounded-full appearance-none cursor-pointer"
-            style={{ accentColor: purple, background: `linear-gradient(to right, ${purple} ${(guestCount - 50) / 1950 * 100}%, ${isDark ? 'rgba(192,156,222,0.2)' : 'rgba(138,79,196,0.2)'} 0%)` }}
+            style={{ accentColor: accent, background: `linear-gradient(to right, ${accent} ${(guestCount - 50) / 1950 * 100}%, ${isDark ? 'rgba(100,180,255,0.1)' : 'rgba(138,79,196,0.2)'} 0%)` }}
           />
           <div className="flex justify-between mt-1">
             <span className="text-[10px]" style={{ color: textMuted }}>50</span>
@@ -517,7 +517,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
             return (
               <div key={category}>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm" style={{ background: isDark ? 'rgba(192,156,222,0.1)' : 'rgba(42,125,212,0.1)' }}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm" style={{ background: isDark ? 'rgba(100,180,255,0.08)' : 'rgba(42,125,212,0.1)' }}>
                     {CATEGORY_EMOJIS[category]}
                   </div>
                   <h3 className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: text }}>{category}</h3>
@@ -531,24 +531,24 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                       className="rounded-2xl p-2.5 flex flex-col gap-2 transition-all"
                       style={{
                         background: item.quantity > 0 
-                          ? (isDark ? 'linear-gradient(135deg, #3a2656, #2d1e45)' : 'linear-gradient(135deg, #f5f0fb, #ffffff)') 
+                          ? (isDark ? 'linear-gradient(135deg, #1e293b, #161e2d)' : 'linear-gradient(135deg, #f5f0fb, #ffffff)') 
                           : card,
-                        border: `1px solid ${item.quantity > 0 ? purple : border}`,
-                        boxShadow: item.quantity > 0 ? `0 10px 20px -10px ${purple}44` : 'none'
+                        border: `1px solid ${item.quantity > 0 ? accent : border}`,
+                        boxShadow: item.quantity > 0 ? `0 10px 20px -10px ${accent}44` : 'none'
                       }}
                     >
                       <div className="flex items-center gap-2">
                         <div className="relative flex-shrink-0">
                           <img loading="lazy" src={item.imgUrl} className="w-12 h-12 rounded-xl object-cover shadow-sm" alt={item.name} />
                           {item.quantity > 0 && (
-                            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white border-2 border-white" style={{ background: purple }}>
+                            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white border-2 border-white" style={{ background: accent }}>
                               {item.quantity}
                             </div>
                           )}
                         </div>
                         <div className="min-w-0">
                           <p className="text-[11px] font-bold leading-tight line-clamp-2" style={{ color: text }}>{item.name}</p>
-                          <p className="text-[10px] mt-0.5 font-bold opacity-60" style={{ color: purple }}>₹{item.pricePerPlate}</p>
+                          <p className="text-[10px] mt-0.5 font-bold opacity-60" style={{ color: accent }}>₹{item.pricePerPlate}</p>
                         </div>
                       </div>
                       
@@ -565,7 +565,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                         <button
                           onClick={() => updateQuantity(item.id, 1)}
                           className="w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md active:scale-90"
-                          style={{ background: purple, color: '#fff' }}
+                          style={{ background: accent, color: '#fff' }}
                         >
                           <Plus className="w-3.5 h-3.5" />
                         </button>
@@ -583,7 +583,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
       <div
         className="fixed bottom-0 left-0 right-0 px-4 py-4 z-20"
         style={{
-          background: isDark ? 'rgba(26,16,37,0.97)' : 'rgba(255,255,255,0.97)',
+          background: isDark ? 'rgba(10,15,26,0.97)' : 'rgba(255,255,255,0.97)',
           backdropFilter: 'blur(12px)',
           borderTop: `1px solid ${border}`,
         }}
@@ -592,7 +592,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
           onClick={generateAndSharePDF}
           disabled={allSelected.length === 0}
           className="w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2.5 transition-all active:scale-95 shadow-lg disabled:opacity-40"
-          style={{ background: `linear-gradient(135deg, ${purple}, ${isDark ? '#a07ac8' : '#5aa0e0'})`, color: '#fff' }}
+          style={{ background: `linear-gradient(135deg, ${accent}, ${isDark ? '#0ea5e9' : '#5aa0e0'})`, color: '#fff' }}
         >
           <Download className="w-4 h-4" />
           Export PDF & Share on WhatsApp
