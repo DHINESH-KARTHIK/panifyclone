@@ -254,7 +254,7 @@ function TouchResourceCard({ item, onTouchDrop, card, border, text, isDark }: To
       style={{
         background: card,
         border: `1px solid ${border}`,
-        touchAction: 'none',
+        touchAction: 'pan-x',
         WebkitUserSelect: 'none',
         userSelect: 'none',
       }}
@@ -331,11 +331,13 @@ export function ResourceRibbon({ onPointerDrop }: ResourceRibbonProps) {
     >
       {/* Category Tabs */}
       <div
-        className="flex gap-1.5 px-3 pt-3 overflow-x-auto"
+        className="flex gap-1.5 px-3 pt-3 overflow-x-auto w-full"
         style={{
           scrollbarWidth: 'none',
           WebkitOverflowScrolling: 'touch',
           msOverflowStyle: 'none',
+          overflowX: 'auto',
+          paddingRight: '20px',
         }}
       >
         {categories.map((cat) => (
