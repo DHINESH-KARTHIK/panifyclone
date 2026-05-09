@@ -423,7 +423,7 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
                                   style={{ marginLeft: -24, marginTop: -24 }}
                                 >
                                   <div className="relative">
-                                    <div className="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-white">
+                                    <div className="w-12 h-12 rounded-full overflow-hidden shadow-md border-[1.5px] border-black/80">
                                       <img loading="lazy" src={item.imgUrl} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white shadow-sm" style={{ background: purple }}>
