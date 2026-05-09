@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Minus, Plus, Download, Users, Utensils, Info, ChevronDown, ChevronUp, Share2 } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Minus, Plus, Download, Users, Utensils, Info, ChevronDown, ChevronUp, Share2, GlassWater, Coffee, Wine } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useTheme } from '../context/ThemeContext';
 import plateImg from './plate.png';
 import waterImg from './water.png';
@@ -331,88 +332,173 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
       </div>
 
       {/* Stats Bar */}
-      <div className="flex gap-3 px-4 py-2.5" style={{ borderBottom: `1px solid ${border}`, background: muted }}>
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex gap-2 px-4 py-2.5" 
+        style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'rgba(58,38,86,0.4)' : 'rgba(200,228,255,0.4)' }}
+      >
         {[
-          { label: 'Guests', value: guestCount },
-          { label: 'Dishes', value: totalSelected },
-          { label: '/ Plate', value: `₹${pricePerPlate}` },
+          { label: 'Guests', value: guestCount, icon: <Users className="w-3 h-3" /> },
+          { label: 'Items', value: totalSelected, icon: <Utensils className="w-3 h-3" /> },
+          { label: 'Per Plate', value: `₹${pricePerPlate}`, icon: <Info className="w-3 h-3" /> },
         ].map((stat, i) => (
-          <div key={i} className="flex-1 text-center">
-            <p className="text-[10px] uppercase tracking-wide font-semibold" style={{ color: textMuted }}>{stat.label}</p>
+          <div key={i} className="flex-1 flex flex-col items-center justify-center p-2 rounded-xl" style={{ background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}>
+            <div className="flex items-center gap-1 mb-0.5">
+              <span style={{ color: purple }}>{stat.icon}</span>
+              <p className="text-[9px] uppercase tracking-wider font-bold" style={{ color: textMuted }}>{stat.label}</p>
+            </div>
             <p className="text-sm font-black" style={{ color: text }}>{stat.value}</p>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto pb-24">
 
-        {/* Plate Preview (collapsible on mobile) */}
-        <div style={{ borderBottom: `1px solid ${border}` }}>
+        {/* Plate Preview */}
+        <div style={{ borderBottom: `1px solid ${border}`, background: isDark ? 'linear-gradient(to bottom, #231633, #2a1b3d)' : 'linear-gradient(to bottom, #f0f7ff, #f8faff)' }}>
           <button
             onClick={() => setShowPlate(v => !v)}
-            className="w-full flex items-center justify-between px-4 py-3"
+            className="w-full flex items-center justify-between px-4 py-4"
             style={{ color: text }}
           >
-            <span className="text-sm font-bold">🍽️ Plate Preview</span>
-            {showPlate ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-inner" style={{ background: isDark ? '#3a2656' : '#c8e4ff' }}>
+                <span className="text-sm">🍽️</span>
+              </div>
+              <div className="text-left">
+                <span className="text-sm font-black block">Plate Preview</span>
+                <span className="text-[10px]" style={{ color: textMuted }}>{selectedItems.length} Food • {selectedDrinks.length} Drinks</span>
+              </div>
+            </div>
+            {showPlate ? <ChevronUp className="w-4 h-4 opacity-50" /> : <ChevronDown className="w-4 h-4 opacity-50" />}
           </button>
 
-          {showPlate && (
-            <div className="flex items-center justify-center gap-6 px-4 pb-5" style={{ background: isDark ? '#231633' : '#faf8ff' }}>
-              {/* Plate */}
-              <div className="relative w-44 h-44 sm:w-56 sm:h-56 flex-shrink-0">
-                <img loading="lazy" src={plateImg} alt="Plate" className="w-full h-full object-contain drop-shadow-xl" />
-                <div className="absolute inset-0">
-                  {selectedItems.length === 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <p className="text-[10px] text-center italic px-4" style={{ color: textMuted }}>Select dishes to<br/>populate</p>
-                    </div>
-                  )}
-                  <div className="relative w-full h-full">
-                    {selectedItems.map((item, index) => {
-                      const angle = (index / selectedItems.length) * 2 * Math.PI;
-                      const radius = 55;
-                      const x = Math.cos(angle) * radius;
-                      const y = Math.sin(angle) * radius;
-                      return (
-                        <div
-                          key={item.id}
-                          className="absolute transition-all duration-500"
-                          style={{ left: `calc(50% + ${x}px - 24px)`, top: `calc(50% + ${y}px - 24px)` }}
-                        >
-                          <div className="relative">
-                            <div className="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-white">
-                              <img loading="lazy" src={item.imgUrl} alt={item.name} className="w-full h-full object-cover" />
-                            </div>
-                            <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white" style={{ background: purple }}>
-                              {item.quantity}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+          <AnimatePresence>
+            {showPlate && (
+              <motion.div 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="flex flex-col items-center gap-6 px-4 pb-8">
+                  {/* Plate Container */}
+                  <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex-shrink-0 group">
+                    <motion.img 
+                      layoutId="plate-img"
+                      src={plateImg} 
+                      alt="Plate" 
+                      className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]" 
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <AnimatePresence>
+                        {selectedItems.length === 0 ? (
+                          <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="text-center pointer-events-none"
+                          >
+                            <p className="text-[11px] font-medium italic px-8 leading-relaxed" style={{ color: textMuted }}>
+                              Select dishes below to<br/>architect your plate
+                            </p>
+                          </motion.div>
+                        ) : (
+                          <div className="relative w-full h-full">
+                            {selectedItems.map((item, index) => {
+                              // Concentric layout logic
+                              const layer = Math.floor(index / 6);
+                              const indexInLayer = index % 6;
+                              const itemsInLayer = Math.min(selectedItems.length - layer * 6, 6);
+                              const angle = (indexInLayer / itemsInLayer) * 2 * Math.PI + (layer * 0.5);
+                              const radius = layer === 0 ? 55 : (layer === 1 ? 85 : 110);
+                              const x = Math.cos(angle) * radius;
+                              const y = Math.sin(angle) * radius;
+                              const size = layer === 0 ? 52 : (layer === 1 ? 44 : 36);
 
-              {/* Drinks */}
-              {selectedDrinks.length > 0 && (
-                <div className="flex flex-col items-center gap-2">
-                  <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: textMuted }}>Drinks</p>
-                  {selectedDrinks.map(drink => (
-                    <div key={drink.id} className="flex flex-col items-center gap-1 animate-in fade-in zoom-in-75">
-                      <div className="w-14 h-20 rounded-xl overflow-hidden shadow-md">
-                        <img loading="lazy" src={drink.imgUrl} alt={drink.name} className="w-full h-full object-cover" />
-                      </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: purple, color: '#fff' }}>×{drink.quantity}</span>
-                      <p className="text-[9px] text-center font-medium max-w-16" style={{ color: textMuted }}>{drink.name}</p>
+                              return (
+                                <motion.div
+                                  key={item.id}
+                                  initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
+                                  animate={{ scale: 1, opacity: 1, x, y }}
+                                  exit={{ scale: 0, opacity: 0 }}
+                                  className="absolute left-1/2 top-1/2"
+                                  style={{ 
+                                    marginLeft: -(size/2), 
+                                    marginTop: -(size/2),
+                                    zIndex: 10 - layer 
+                                  }}
+                                >
+                                  <div className="relative group">
+                                    <div 
+                                      className="rounded-full overflow-hidden shadow-lg border-2 border-white transition-transform hover:scale-110 active:scale-90"
+                                      style={{ width: size, height: size }}
+                                    >
+                                      <img loading="lazy" src={item.imgUrl} alt={item.name} className="w-full h-full object-cover" />
+                                    </div>
+                                    <motion.div 
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black text-white shadow-sm" 
+                                      style={{ background: purple }}
+                                    >
+                                      {item.quantity}
+                                    </motion.div>
+                                  </div>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Beverage Tray Redesign */}
+                  <AnimatePresence>
+                    {selectedDrinks.length > 0 && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="w-full"
+                      >
+                        <div className="flex items-center gap-2 mb-3">
+                          <Wine className="w-3 h-3" style={{ color: purple }} />
+                          <p className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: textMuted }}>Beverage Tray</p>
+                          <div className="flex-1 h-px opacity-20" style={{ background: purple }} />
+                        </div>
+                        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none px-2">
+                          {selectedDrinks.map(drink => (
+                            <motion.div 
+                              key={drink.id} 
+                              layout
+                              initial={{ scale: 0.8, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              className="flex-shrink-0 flex flex-col items-center gap-2"
+                            >
+                              <div className="relative">
+                                <div className="w-16 h-24 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 bg-white/5 backdrop-blur-md">
+                                  <img loading="lazy" src={drink.imgUrl} alt={drink.name} className="w-full h-full object-cover" />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                </div>
+                                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white shadow-lg border-2 border-white" style={{ background: purple }}>
+                                  {drink.quantity}
+                                </div>
+                              </div>
+                              <p className="text-[10px] text-center font-bold max-w-[70px] leading-tight line-clamp-1" style={{ color: text }}>{drink.name}</p>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              )}
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Guest Count */}
@@ -441,56 +527,67 @@ _Detailed PDF attached. Authorised by Planify Event Management._`;
         </div>
 
         {/* Menu Items */}
-        <div className="px-4 py-4 space-y-5">
+        <div className="px-4 py-6 space-y-8">
           {(['Starters', 'Main Course', 'Breads', 'Desserts', 'Hot Beverages', 'Cold Drinks & Juices'] as const).map(category => {
             const catItems = items.filter(i => i.category === category);
             if (!catItems.length) return null;
             return (
               <div key={category}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-base">{CATEGORY_EMOJIS[category]}</span>
-                  <h3 className="text-xs font-black uppercase tracking-widest" style={{ color: text }}>{category}</h3>
-                  <div className="flex-1 h-px" style={{ background: border }} />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm" style={{ background: isDark ? 'rgba(192,156,222,0.1)' : 'rgba(42,125,212,0.1)' }}>
+                    {CATEGORY_EMOJIS[category]}
+                  </div>
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: text }}>{category}</h3>
+                  <div className="flex-1 h-px opacity-20" style={{ background: text }} />
                 </div>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {catItems.map(item => (
-                    <div
+                    <motion.div
                       key={item.id}
-                      className="rounded-2xl p-2.5 transition-all"
+                      whileTap={{ scale: 0.98 }}
+                      className="rounded-2xl p-2.5 flex flex-col gap-2 transition-all"
                       style={{
-                        background: item.quantity > 0 ? (isDark ? '#3a2656' : '#f5f0fb') : card,
-                        border: `1px solid ${item.quantity > 0 ? purple + '66' : border}`,
+                        background: item.quantity > 0 
+                          ? (isDark ? 'linear-gradient(135deg, #3a2656, #2d1e45)' : 'linear-gradient(135deg, #f5f0fb, #ffffff)') 
+                          : card,
+                        border: `1px solid ${item.quantity > 0 ? purple : border}`,
+                        boxShadow: item.quantity > 0 ? `0 10px 20px -10px ${purple}44` : 'none'
                       }}
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <img loading="lazy" src={item.imgUrl} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" alt={item.name} />
+                      <div className="flex items-center gap-2">
+                        <div className="relative flex-shrink-0">
+                          <img loading="lazy" src={item.imgUrl} className="w-12 h-12 rounded-xl object-cover shadow-sm" alt={item.name} />
+                          {item.quantity > 0 && (
+                            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white border-2 border-white" style={{ background: purple }}>
+                              {item.quantity}
+                            </div>
+                          )}
+                        </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-bold leading-tight line-clamp-2" style={{ color: text }}>{item.name}</p>
-                          <p className="text-[10px] mt-0.5 font-semibold" style={{ color: purple }}>₹{item.pricePerPlate}/plate</p>
+                          <p className="text-[11px] font-bold leading-tight line-clamp-2" style={{ color: text }}>{item.name}</p>
+                          <p className="text-[10px] mt-0.5 font-bold opacity-60" style={{ color: purple }}>₹{item.pricePerPlate}</p>
                         </div>
                       </div>
-                      <div
-                        className="flex items-center justify-between rounded-full px-1 py-1"
-                        style={{ background: isDark ? '#231633' : '#e8f3ff', border: `1px solid ${border}` }}
-                      >
+                      
+                      <div className="flex items-center justify-between mt-auto bg-black/5 dark:bg-white/5 rounded-full p-0.5">
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
                           disabled={item.quantity === 0}
-                          className="w-7 h-7 rounded-full flex items-center justify-center transition-all active:scale-90 disabled:opacity-25"
+                          className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:bg-black/5 active:scale-90 disabled:opacity-25"
                           style={{ color: text }}
                         >
-                          <Minus className="w-3 h-3" />
+                          <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="w-6 text-center text-xs font-black" style={{ color: text }}>{item.quantity}</span>
+                        <span className="text-[11px] font-black" style={{ color: text }}>{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="w-7 h-7 rounded-full flex items-center justify-center transition-all active:scale-90"
+                          className="w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md active:scale-90"
                           style={{ background: purple, color: '#fff' }}
                         >
-                          <Plus className="w-3 h-3" />
+                          <Plus className="w-3.5 h-3.5" />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
